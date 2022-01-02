@@ -22,6 +22,7 @@ public class Rgb {
 
     /** Returns the luminosity corresponding to a rgb value in hex.
      *  Uses a weighted linear function.
+     *  (weight specified in https://en.wikipedia.org/wiki/Relative_luminance)
      */
     public static double getLuminosityLinear(int rgb){
         int red = (rgb >> 16) & 0xff;
@@ -47,7 +48,9 @@ public class Rgb {
         return (alpha << 24) | (lum << 16) | (lum << 8) | lum;
     }
 
-    /** Returns the gamma-compressed value of a color value in range [0,1] */
+    /** Returns the gamma-compressed value of a color value in range [0,1]
+     * https://en.wikipedia.org/wiki/SRGB#Theory_of_the_transformation
+     */
     private static double gammaCompress(double colorValue){
         if (colorValue <= 0.0031308) {
             return 12.92 * colorValue;
@@ -56,7 +59,9 @@ public class Rgb {
         return 1.055 * Math.pow(colorValue, 0.41666) - 0.055;
     }
 
-    /** Returns the gamma-expanded value of a color value in range [0,1] */
+    /** Returns the gamma-expanded value of a color value in range [0,1]
+     * https://en.wikipedia.org/wiki/SRGB#Theory_of_the_transformation
+     */
     private static double gammaExpand(double colorValue){
         if (colorValue <= 0.04045) {
             return colorValue / 12.92;  // https://en.wikipedia.org/wiki/SRGB

@@ -30,19 +30,21 @@ public class Grayscale {
         return grayImg;
     }
 
-    /** Returns an 8-bit grayscale array of the image. */
+    /** Returns an grayscale array of the image.
+     *  Luminosity range is 0-255 (8 bit)
+     * */
     public static GrayscaleArray getArray(BufferedImage img){
-        int[][] grayscaleArr = new int[img.getHeight()][img.getWidth()];
+        int[][] arr = new int[img.getHeight()][img.getWidth()];
 
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
                 int rgb = img.getRGB(x, y);
                 int lum = (int) Rgb.getLuminosityLinear(rgb);
 
-                grayscaleArr[y][x] = lum;
+                arr[y][x] = lum;
             }
         }
 
-        return new GrayscaleArray(grayscaleArr);
+        return new GrayscaleArray(arr);
     }
 }
